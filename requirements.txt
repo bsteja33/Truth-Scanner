@@ -8,3 +8,4 @@ streamlit>=1.25.0
 requests>=2.31.0
 joblib>=1.2.0
 plotly>=5.14.0
+https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.7.1/en_core_web_sm-3.7.1.tar.gz
