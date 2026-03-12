@@ -1,0 +1,29 @@
+# Backend — FastAPI inference server
+# Base: slim Python 3.11 to keep the image lightweight
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Install system-level dependencies required by SpaCy
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gcc \
+    g++ \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Python dependencies before copying source code
+# so Docker can cache this layer across rebuilds
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt \
+    && python -m spacy download en_core_web_sm
+
+# Copy only the files the API needs at runtime
+COPY api/   api/
+COPY src/   src/
+
+# The trained model must exist in models/ before building.
+# Run `python src/train.py` locally first, then build the image.
+COPY models/ensemble_pipeline.pkl models/ensemble_pipeline.pkl
+
+EXPOSE 8000
+
+CMD ["uvicorn", "api.api:app", "--host", "0.0.0.0", "--port", "8000"]

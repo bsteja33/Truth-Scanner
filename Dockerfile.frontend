@@ -1,0 +1,19 @@
+# Frontend — Streamlit web interface
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Install Python dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy only the frontend source
+COPY frontend/ frontend/
+
+EXPOSE 8501
+
+# Headless mode disables the browser auto-open on container start
+CMD ["streamlit", "run", "frontend/app.py", \
+     "--server.port=8501", \
+     "--server.address=0.0.0.0", \
+     "--server.headless=true"]

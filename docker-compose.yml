@@ -1,0 +1,33 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: truthscanner-api
+    ports:
+      - "8000:8000"
+    networks:
+      - truthscanner-net
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: truthscanner-ui
+    ports:
+      - "8501:8501"
+    environment:
+      # Resolved via Docker's internal DNS — 'backend' is the service name above
+      - API_URL=http://backend:8000/predict
+    depends_on:
+      - backend
+    networks:
+      - truthscanner-net
+    restart: unless-stopped
+
+networks:
+  truthscanner-net:
+    driver: bridge

@@ -1,0 +1,38 @@
+# Exclude development and runtime artefacts from the Docker build context.
+# Keeping the context small speeds up `docker-compose up --build`.
+
+# Python bytecode
+__pycache__/
+*.pyc
+*.pyo
+
+# Trained model — copy this manually or bind-mount it; never embed in image layers
+# (comment out the line below if you want to COPY the pkl at build time)
+# models/
+
+# Large datasets — not needed by the app at runtime
+data/
+
+# Virtual environments
+env/
+venv/
+.venv/
+
+# Testing and linting
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs and generated reports
+logs/
+*.log
+evaluation_results.txt
+robustness_report.md
