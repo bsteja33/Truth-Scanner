@@ -4,25 +4,21 @@ A compound AI system that classifies news articles as real or fake using a soft-
 
 ---
 
-## Project Evolution
+## Core Features
 
-The original assignment (Task 2) specified a simple linear model with TF-IDF features. This implementation fulfills that specification and extends it into a production-grade compound AI system:
+This system is engineered for high accuracy, robustness, and production safety, utilizing a multi-layered architecture:
 
-| Layer | Original Requirement | This Implementation |
-|---|---|---|
-| Classification | Single linear model | Soft-Voting Ensemble (5 classifiers) |
-| Serving | Script / notebook | FastAPI REST backend with Pydantic validation |
-| Interface | None | Streamlit frontend with Plotly gauge chart |
-| Robustness | None | Byline ablation, adversarial, and drift testing |
-| Safety | None | Input validation, payload cap, HTTP error propagation |
-
-The core requirement — TF-IDF features and linear classifiers trained on the ISOT dataset — remains the backbone of the pipeline. The advanced architecture wraps it without replacing it.
+* **Soft-Voting Ensemble:** Combines MultinomialNB, LogisticRegression, SVC (linear), SGDClassifier, and RandomForestClassifier over TF-IDF and CountVectorized features.
+* **REST API Backend:** Built with FastAPI, featuring strict Pydantic payload validation and high-concurrency handling.
+* **Interactive Frontend:** Streamlit UI with Plotly gauge charts for real-time confidence visualization.
+* **Adversarial Robustness:** Tested against byline ablation, keyword perturbation, and temporal data drift.
+* **Production Safety:** Includes input validation, payload truncation, and comprehensive HTTP error propagation.
 
 ---
 
 ## Architecture
 
-```
+```text
 data/ (ISOT True.csv + Fake.csv)
     |
     v
