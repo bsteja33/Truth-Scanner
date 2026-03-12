@@ -99,7 +99,6 @@ The dataset files are excluded from this repository (see `.gitignore`). Place `T
 
 ```bash
 pip install -r requirements.txt
-python -m spacy download en_core_web_sm
 ```
 
 ### Train the model
@@ -129,10 +128,10 @@ streamlit run frontend/app.py
 
 To start both services together:
 
-```bash
+```
+bash
 python main.py
 ```
-
 ---
 
 ## API Reference
@@ -181,8 +180,9 @@ Empty or whitespace-only payloads return HTTP 422.
 ├── README.md
 ├── main.py
 ├── requirements.txt
-├── run.bat
-└── run.sh
+├── Dockerfile.backend
+├── Dockerfile.frontend
+└── docker-compose.yml
 ```
 
 ---
@@ -197,7 +197,6 @@ The trained model must be present before building the images. If you have not al
 
 ```bash
 pip install -r requirements.txt
-python -m spacy download en_core_web_sm
 python src/train.py
 ```
 
